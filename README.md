@@ -314,6 +314,8 @@ This repo is designed around the full lifecycle of agent-driven development:
 
 ## Publishing
 
+Versioning follows CalVer tags: `vYYYY.MM.DD` (optionally `vYYYY.MM.DD.N` for same-day follow-up releases).
+
 Use [docs/PUBLISHING.md](./docs/PUBLISHING.md) to publish updates across package manager ecosystems.
 
 ---

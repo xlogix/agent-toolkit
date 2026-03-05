@@ -4,7 +4,9 @@ This project is a cross-platform installer that orchestrates native package mana
 
 ## Release flow (recommended)
 
-1. Tag a release (for example `v1.2.0`).
+Versioning uses **CalVer** tags: `vYYYY.MM.DD` (optional patch: `vYYYY.MM.DD.N`).
+
+1. Tag a release (for example `v2026.03.05`).
 2. Publish release artifacts (`install.sh`, `install.ps1`, checksums).
 3. Update package manager manifests in `packaging/`.
 4. Submit updates to each ecosystem repository.
@@ -12,7 +14,7 @@ This project is a cross-platform installer that orchestrates native package mana
 Helper:
 
 ```bash
-GITHUB_REPO=<owner>/<repo> ./scripts/release-prep.sh v1.2.0
+GITHUB_REPO=<owner>/<repo> ./scripts/release-prep.sh v2026.03.05
 ```
 
 This prints the SHA256 values to paste into Homebrew and Scoop manifests.

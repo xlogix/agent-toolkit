@@ -4,7 +4,8 @@ set -euo pipefail
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: GITHUB_REPO=<owner>/<repo> ./scripts/release-prep.sh <version>"
-  echo "Example: GITHUB_REPO=myorg/agent-tools ./scripts/release-prep.sh v1.2.0"
+  echo "Example: GITHUB_REPO=myorg/agent-tools ./scripts/release-prep.sh v2026.03.05"
+  echo "Version format: vYYYY.MM.DD (optional: vYYYY.MM.DD.N)"
   exit 1
 fi
 
@@ -14,6 +15,11 @@ if [[ -z "${GITHUB_REPO:-}" ]]; then
 fi
 
 VERSION="$1"
+if ! [[ "$VERSION" =~ ^v[0-9]{4}\.[0-9]{2}\.[0-9]{2}(\.[0-9]+)?$ ]]; then
+  echo "Error: version must match CalVer tag format vYYYY.MM.DD or vYYYY.MM.DD.N"
+  exit 1
+fi
+
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
@@ -43,4 +49,3 @@ Scoop zip SHA256:       $ZIP_SHA
   url: https://github.com/${GITHUB_REPO}/archive/refs/tags/${VERSION}.zip
   hash: $ZIP_SHA
 EOF
-

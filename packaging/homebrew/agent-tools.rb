@@ -1,7 +1,7 @@
 class AgentTools < Formula
   desc "Cross-platform installer for coding-agent toolchains"
   homepage "https://github.com/<owner>/<repo>"
-  url "https://github.com/<owner>/<repo>/archive/refs/tags/v0.1.0.tar.gz"
+  url "https://github.com/<owner>/<repo>/archive/refs/tags/v2026.03.05.tar.gz"
   sha256 "REPLACE_WITH_RELEASE_TARBALL_SHA256"
   license "MIT"
 

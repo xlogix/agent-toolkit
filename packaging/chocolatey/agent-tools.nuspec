@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>agent-tools</id>
-    <version>0.1.0</version>
+    <version>2026.03.05</version>
     <title>Agent Tools Installer</title>
     <authors>REPLACE_ME</authors>
     <projectUrl>https://github.com/&lt;owner&gt;/&lt;repo&gt;</projectUrl>
@@ -15,4 +15,3 @@
     <file src="tools\**" target="tools" />
   </files>
 </package>
-

@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: Agent Toolkit
+message: "If you use this project, please cite it using this metadata."
+type: software
+authors:
+  - family-names: Uniyal
+    given-names: Abhishek
+repository-code: "https://github.com/xlogix/agent-toolkit"
+url: "https://github.com/xlogix/agent-toolkit"
+license: MIT
+keywords:
+  - llm
+  - agents
+  - developer-tools
+  - cli
+  - productivity

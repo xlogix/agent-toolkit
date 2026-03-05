@@ -1,0 +1,46 @@
+name: Feature request
+description: Suggest a new feature or improvement
+title: "[feature] "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the idea. Please share the user impact and proposed behavior.
+  - type: input
+    id: problem
+    attributes:
+      label: Problem
+      description: What pain point does this solve?
+      placeholder: It is hard to...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What should happen?
+      placeholder: Add a new command/flag that...
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any current workarounds or alternatives
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Area
+      options:
+        - CLI
+        - Installer
+        - Docs
+        - Packaging
+        - Benchmarks
+        - CI
+        - Other
+    validations:
+      required: true
+

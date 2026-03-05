@@ -1,0 +1,28 @@
+name: Smoke
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  shell-installer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bash syntax check
+        run: bash -n install.sh agent-tools.sh scripts/install-agent-tools.sh scripts/release-prep.sh
+      - name: Dry run (apt)
+        run: bash install.sh --package-manager apt --dry-run --extras
+      - name: CLI init dry run
+        run: bash agent-tools.sh init --repo . --dry-run
+
+  powershell-installer:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse check
+        run: |
+          pwsh -NoProfile -Command "[void][System.Management.Automation.Language.Parser]::ParseFile('install.ps1',[ref]$null,[ref]$null)"
+      - name: Dry run (winget)
+        shell: pwsh
+        run: ./install.ps1 -PackageManager winget -DryRun -Extras

@@ -1,0 +1,55 @@
+name: Bug report
+description: Report something that is broken
+title: "[bug] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting this. Please include enough detail to reproduce.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: What is broken?
+      placeholder: Short bug summary
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Exact commands and expected vs actual behavior
+      placeholder: |
+        1. Run ...
+        2. Run ...
+        3. See error ...
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - macOS
+        - Linux
+        - Windows
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: package_manager
+    attributes:
+      label: Package manager
+      description: brew, apt, dnf, pacman, zypper, apk, winget, choco, scoop
+      placeholder: brew
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs/output
+      description: Paste error output
+      render: shell
+

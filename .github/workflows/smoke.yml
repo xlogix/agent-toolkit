@@ -10,7 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Bash syntax check
-        run: bash -n install.sh agent-tools.sh scripts/install-agent-tools.sh scripts/release-prep.sh
+        run: bash -n install.sh agent-tools.sh scripts/install-agent-tools.sh scripts/release-prep.sh skills/scripts/generate-tool-catalog.sh scripts/benchmarks/run-scientific-benchmarks.sh
+      - name: Verify generated skill catalog is current
+        run: |
+          bash skills/scripts/generate-tool-catalog.sh
+          git diff --exit-code -- skills/references/TOOL-CATALOG.md
       - name: Dry run (apt)
         run: bash install.sh --package-manager apt --dry-run --extras
       - name: CLI init dry run

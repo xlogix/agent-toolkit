@@ -7,9 +7,12 @@ This project is a cross-platform installer that orchestrates native package mana
 Versioning uses **CalVer** tags: `vYYYY.MM.DD` (optional patch: `vYYYY.MM.DD.N`).
 
 1. Tag a release (for example `v2026.03.05`).
-2. Publish release artifacts (`install.sh`, `install.ps1`, checksums).
-3. Update package manager manifests in `packaging/`.
-4. Submit updates to each ecosystem repository.
+2. Regenerate generated docs and verify no drift:
+   - `bash skills/scripts/generate-tool-catalog.sh`
+   - `git diff --exit-code -- skills/references/TOOL-CATALOG.md`
+3. Publish release artifacts (`install.sh`, `install.ps1`, checksums).
+4. Update package manager manifests in `packaging/`.
+5. Submit updates to each ecosystem repository.
 
 Helper:
 

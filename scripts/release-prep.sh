@@ -2,6 +2,11 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+CATALOG_SCRIPT="$ROOT_DIR/skills/scripts/generate-tool-catalog.sh"
+CATALOG_FILE="$ROOT_DIR/skills/references/TOOL-CATALOG.md"
+
 if [[ $# -lt 1 ]]; then
   echo "Usage: GITHUB_REPO=<owner>/<repo> ./scripts/release-prep.sh <version>"
   echo "Example: GITHUB_REPO=myorg/agent-tools ./scripts/release-prep.sh v2026.03.05"
@@ -18,6 +23,18 @@ VERSION="$1"
 if ! [[ "$VERSION" =~ ^v[0-9]{4}\.[0-9]{2}\.[0-9]{2}(\.[0-9]+)?$ ]]; then
   echo "Error: version must match CalVer tag format vYYYY.MM.DD or vYYYY.MM.DD.N"
   exit 1
+fi
+
+if [[ -x "$CATALOG_SCRIPT" ]]; then
+  echo "==> Verifying generated tool catalog is up to date"
+  bash "$CATALOG_SCRIPT" >/dev/null
+  if command -v git >/dev/null 2>&1 && git -C "$ROOT_DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    if ! git -C "$ROOT_DIR" diff --quiet -- "$CATALOG_FILE"; then
+      echo "Error: $CATALOG_FILE is stale. Regenerate and commit before release."
+      git -C "$ROOT_DIR" --no-pager diff -- "$CATALOG_FILE" || true
+      exit 1
+    fi
+  fi
 fi
 
 TMP_DIR="$(mktemp -d)"

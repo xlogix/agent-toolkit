@@ -139,7 +139,7 @@ flowchart LR
 This repository optimizes **B** and **C** heavily, while improving the ergonomics of **D** and **E**.
 
 <p align="center">
-  <img src="./assets/agenttools-assemble-overview.png" alt="AgentTools Assemble overview with capability packs and SDLC flow." />
+  <img src="./assets/agenttools-assemble-overview.svg" alt="AgentTools Assemble overview with capability packs and benchmark speedups." />
 </p>
 
 ---

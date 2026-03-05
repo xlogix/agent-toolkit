@@ -65,6 +65,12 @@ Keep generated corpus for deep analysis:
 bash scripts/benchmarks/run-scientific-benchmarks.sh --keep-workdir
 ```
 
+Regenerate the overview visual asset from latest benchmark results:
+
+```bash
+bash scripts/assets/generate-overview-asset.sh
+```
+
 ## Notes
 
 - Benchmarks are host-dependent (CPU, filesystem, thermal state, background load).

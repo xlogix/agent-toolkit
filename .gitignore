@@ -1,0 +1,17 @@
+# Temporary working files (generated locally)
+tmp/
+.generated/
+
+# AI Agents
+.claude/
+.playwright-cli/
+
+# Test and debug artifacts
+coverage/
+test-results/
+artifacts/
+*.log
+
+# OS/editor noise
+.DS_Store
+

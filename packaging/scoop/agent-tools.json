@@ -1,0 +1,16 @@
+{
+  "version": "0.1.0",
+  "description": "Cross-platform installer for coding-agent toolchains",
+  "homepage": "https://github.com/<owner>/<repo>",
+  "license": "MIT",
+  "url": "https://github.com/<owner>/<repo>/archive/refs/tags/v0.1.0.zip",
+  "hash": "REPLACE_WITH_RELEASE_ZIP_SHA256",
+  "bin": [
+    [
+      "install.ps1",
+      "agent-tools-install"
+    ]
+  ],
+  "notes": "Run: agent-tools-install -Extras"
+}
+

@@ -1,5 +1,10 @@
 # Agent Toolkit
 
+## The Real Bottleneck
+
+AI coding conversations usually focus on model capability, but real delivery speed is often gated somewhere else. During implementation, agents repeatedly run local repository commands for search, file discovery, parsing, diffing, and validation. Those loops depend on CLI latency, and even small command delays compound over dozens or hundreds of iterations. This project focuses on accelerating that local loop so model output translates into faster real-world task completion.  
+> The model isn't always the bottleneck. The local tool loop often is.
+
 <p align="center">
   <img src="./assets/agenttools-assemble-hero.png" alt="AgentTools Assemble hero banner with logo." />
 </p>
@@ -34,6 +39,13 @@ Set-ExecutionPolicy -Scope Process Bypass
 
 Need help choosing packs? See **Pick Your Profile Fast** below.
 
+Quick verification:
+
+```bash
+./agent-tools.sh doctor
+./agent-tools.sh profiles
+```
+
 ---
 
 ## Pick Your Profile Fast
@@ -55,33 +67,11 @@ Examples:
 
 ---
 
-## Verify in 30 Seconds
-
-```bash
-./agent-tools.sh doctor
-./agent-tools.sh profiles
-```
-
-On Debian/Ubuntu, `fd` may be `fdfind` and `bat` may be `batcat`.
-Knowledge-first skill and generated catalog:
-[skills/SKILL.md](./skills/SKILL.md), [skills/references/TOOL-CATALOG.md](./skills/references/TOOL-CATALOG.md)
-
----
-
 ## Who This Is For
 
 - engineering teams shipping with AI coding agents
 - solo builders who want faster local agent loops
 - platform/devex teams standardizing agent tooling across OSes
-
-## What You Get Quickly
-
-In one setup, teams get:
-
-- faster search and discovery loops for large repos
-- fewer environment-specific setup issues across macOS/Linux/Windows
-- a single CLI to install, update, diagnose, and repair tooling
-- benchmarkable performance gains, not guesswork
 
 ---
 
@@ -99,17 +89,19 @@ Example: a frontend engineer can still include `api` tools for response testing.
 
 Available packs:
 
-- `core`: search, discovery, diffs, parsing basics
-- `ui`: frontend/media tooling
-- `api`: API and service debugging tools
-- `infra`: env/devops and task automation helpers
-- `quality`: lint, benchmark, and safer refactor/review tools
+- `core`: repository discovery, search, and parsing tools
+- `ui`: frontend development and asset tooling
+- `api`: debugging and inspecting service endpoints
+- `infra`: environment automation utilities
+- `quality`: linting, benchmarking, and validation tools
 
 ---
 
 ## Why This Exists
 
 LLM coding agents are often bottlenecked by local command performance, not model speed.
+
+These tools already exist as standalone utilities, but setting them up consistently across developer machines and package managers is still a practical challenge. AgentTools Assemble solves that by installing a curated, agent-optimized CLI environment with one workflow.
 
 In a typical edit cycle, agents repeatedly do:
 
@@ -123,61 +115,70 @@ If each loop is 2x faster, end-to-end task completion can improve dramatically o
 
 ---
 
-## How Agents Actually Work
+## The Agent Development Loop
 
-```mermaid
-flowchart LR
-  A["User Goal"] --> B["Context Discovery (files, symbols, configs)"]
-  B --> C["Targeted Search + Filtering"]
-  C --> D["Edit + Patch"]
-  D --> E["Run + Validate"]
-  E --> F{"Issue fixed?"}
-  F -- "No" --> B
-  F -- "Yes" --> G["Deliver"]
+```text
+Search repository
+  ↓
+Load context
+  ↓
+Modify code
+  ↓
+Run validation
+  ↓
+Repeat
 ```
 
-This repository optimizes **B** and **C** heavily, while improving the ergonomics of **D** and **E**.
-
-<p align="center">
-  <img src="./assets/agenttools-assemble-overview.svg" alt="AgentTools Assemble overview with capability packs and benchmark speedups." />
-</p>
+This loop can run dozens or hundreds of times in a single task. Each step relies on local CLI commands, and command latency compounds across every iteration.
 
 ---
 
-## The Tool Stack (Top 10)
+## Agent Infrastructure Layer
 
-| Tool | What it accelerates for agents |
-|---|---|
-| `ripgrep (rg)` | Fast recursive search across large codebases |
-| `fd` | Rapid file discovery and extension-based filtering |
-| `jq` | JSON query/transform in shell pipelines |
-| `yq` | YAML/TOML/XML manipulation for config-heavy repos |
-| `fzf` | Fast candidate narrowing in large file/command sets |
-| `bat` | Syntax-highlighted inspection of source/logs |
-| `eza` | Better directory visibility for navigation/planning |
-| `git-delta` | Readable diffs during review and fix iterations |
-| `ImageMagick` | Image transformations for UI/test/debug workflows |
-| `ffmpeg` | Media conversion/extraction for multimodal tasks |
+```text
+LLM
+↓
+Agent framework
+↓
+CLI primitives (AgentTools Assemble)
+↓
+Operating system
+```
+
+AgentTools Assemble optimizes the CLI primitive layer used by agents between planning and execution.
+
+---
+
+## Agent Capability Stack
+
+> These tools are not random utilities. They represent the core primitives agents repeatedly call when interacting with repositories, APIs, and local environments.
+
+Repository discovery and search:
+`ripgrep (rg)`, `fd`, `fzf`
+
+Structured data inspection:
+`jq`, `yq`
+
+Code understanding and transformation:
+`ast-grep`, `sd`, `git-delta`, `difftastic`, `bat`
+
+Automation and benchmarking:
+`hyperfine`, `just`, `watchexec`, `shellcheck`, `direnv`
+
+Networking and API interaction:
+`httpie`, `grpcurl`, `gh`
+
+System diagnostics and workflow visibility:
+`lazygit`
+
+Developer navigation:
+`eza`, `zoxide`
+
+Frontend/media and multimodal asset workflows:
+`ImageMagick`, `ffmpeg`, `tesseract`
 
 No-profile install includes all packs.
 Use `--profiles core` for a minimal/space-saving setup.
-
-Optional extras:
-
-- `tesseract` (OCR)
-- `shellcheck` (shell linting)
-- `hyperfine` (benchmarking)
-- `gh` (GitHub CLI)
-- `ast-grep` (structural search/refactor)
-- `sd` (modern search-replace)
-- `just` (task runner)
-- `direnv` (project-local environment loading)
-- `zoxide` (smarter directory jumps)
-- `watchexec` (watch and rerun loops)
-- `difftastic` (syntax-aware diffs)
-- `lazygit` (fast interactive git workflows)
-- `httpie` (human-friendly API CLI)
-- `grpcurl` (gRPC debugging from terminal)
 
 Additional candidate tools and rollout notes:
 [docs/TOOL-CANDIDATES.md](./docs/TOOL-CANDIDATES.md)
@@ -187,6 +188,11 @@ Additional candidate tools and rollout notes:
 ## Real Performance Gains
 
 Measured locally on **Apple M3 Pro / macOS 26.3 / hyperfine 1.20.0** (40 runs, 8 warmups, date: 2026-03-05).
+The benchmark corpus includes roughly 30k+ files across text, TypeScript, markdown, JSON, and YAML workloads to reflect mixed-repository agent loops.
+
+Recursive search: `grep -R` vs `rg` -> **2.83x faster**  
+File discovery: `find` vs `fd` -> **1.86x faster**  
+Find + grep pipeline: `find ... -exec grep` vs `rg -g` -> **3.57x faster**
 
 | Workflow | Baseline | Agent tool | Mean baseline | Mean with agent tool | Speedup |
 |---|---|---|---:|---:|---:|
@@ -197,6 +203,8 @@ Measured locally on **Apple M3 Pro / macOS 26.3 / hyperfine 1.20.0** (40 runs, 8
 | JSON query | `python3` | `jq` | 177.4 ms | 41.3 ms | **4.30x** |
 | Search + replace | `sed` | `sd` | 73.6 ms | 29.7 ms | **2.48x** |
 
+These commands appear frequently inside agent edit--validate loops.
+
 Full benchmark methodology and reproduction commands: [docs/BENCHMARKS.md](./docs/BENCHMARKS.md)
 Latest run artifacts: [benchmarks/results/20260305](./benchmarks/results/20260305)
 
@@ -205,28 +213,6 @@ Run the scientific benchmark harness with configurable warmups/runs:
 ```bash
 bash scripts/benchmarks/run-scientific-benchmarks.sh --runs 40 --warmup 8
 ```
-
----
-
-## Using vs Not-Using Agent-First Tools
-
-| Workflow | Without agent-first tooling | With agent-first tooling | Gain |
-|---|---|---|---:|
-| Recursive repo search | `grep -R` | `rg` | **2.83x faster** |
-| File discovery in large trees | `find -name "*.ts"` | `fd -e ts` | **1.86x faster** |
-| Find then search content | `find ... -exec grep` | `rg -g "*.ts"` | **3.57x faster** |
-| Structured code search | regex-only search loops | `ast-grep` patterns | **5.19x faster** in measured case |
-| Bulk search-replace | `sed` loops | `sd` | **2.48x faster** in measured case |
-| Diff review readability | raw `git diff` | `git-delta` / `difftastic` | semantic clarity gains; not always faster in raw render time |
-| Service/API debugging | `curl` scripts | `httpie` + `grpcurl` | better readability/iteration; not always lower raw request latency |
-
----
-
-## Why Teams Adopt This
-
-- It reduces repeated agent cycle time with measurable speedups.
-- It standardizes tool setup across engineers and CI environments.
-- It lowers onboarding friction with one command and one CLI surface.
 
 ---
 
@@ -268,25 +254,6 @@ The menu supports:
 
 `init` writes/patches `.gitignore` in the repo where you run it (or pass `--repo <path>`).
 `--extras` is still available as a shortcut to add `ui,api,infra,quality` packs.
-
-### Example Scenarios
-
-```bash
-# Install all packs (default when --profiles is omitted)
-./agent-tools.sh install
-
-# Lean setup for minimum footprint
-./agent-tools.sh install --profiles core
-
-# Frontend + API overlap
-./agent-tools.sh install --profiles core,ui,api
-
-# Manual override
-./agent-tools.sh install --profiles core --add httpie --remove fzf
-
-# See profile-to-tool mapping
-./agent-tools.sh profiles
-```
 
 Option `7` in the interactive menu (or `./agent-tools.sh init`) adds:
 
@@ -347,20 +314,6 @@ irm https://raw.githubusercontent.com/xlogix/agent-toolkit/main/install.ps1 | ie
 
 ---
 
-## SDLC Alignment
-
-This repo is designed around the full lifecycle of agent-driven development:
-
-| SDLC Stage | Agent behavior | Tooling support |
-|---|---|---|
-| Discovery | Map codebase and config quickly | `fd`, `rg`, `eza`, `fzf` |
-| Implementation | Parse/edit structured data | `jq`, `yq`, `bat` |
-| Validation | Inspect logs/output and rerun loops | `bat`, `ffmpeg`, `ImageMagick` |
-| Review | Compare and reason over changes | `delta` |
-| Optimization | Benchmark workflow changes | `hyperfine` |
-
----
-
 ## Repository Layout
 
 - [agent-tools.sh](./agent-tools.sh): interactive CLI manager (install/update/reinstall/add/doctor/init)
@@ -377,11 +330,7 @@ This repo is designed around the full lifecycle of agent-driven development:
 
 - If `ffmpeg` resolves to a legacy `ffmpeg@6` path on macOS, prefer `/opt/homebrew/bin/ffmpeg`.
 - On Debian/Ubuntu, `fd` may be `fdfind` and `bat` may be `batcat`.
-- Run diagnostics with:
-
-```bash
-./agent-tools.sh doctor
-```
+- Run diagnostics with `./agent-tools.sh doctor`.
 
 ---
 
@@ -408,6 +357,12 @@ For quick onboarding:
 ./agent-tools.sh --help
 ./agent-tools.sh menu
 ```
+
+## Closing
+
+Coding agents depend heavily on local tooling to iterate quickly and safely. Faster CLI primitives directly improve workflow speed across real repository tasks.
+
+Faster primitives make faster agents.
 
 ---
 

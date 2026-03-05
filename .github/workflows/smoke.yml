@@ -22,7 +22,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Parse check
         run: |
-          pwsh -NoProfile -Command "[void][System.Management.Automation.Language.Parser]::ParseFile('install.ps1',[ref]$null,[ref]$null)"
+          $tokens = $null
+          $errors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile('install.ps1', [ref]$tokens, [ref]$errors)
+          if ($errors.Count -gt 0) {
+            $errors | ForEach-Object { Write-Error $_.Message }
+            exit 1
+          }
       - name: Dry run (winget)
         shell: pwsh
         run: ./install.ps1 -PackageManager winget -DryRun -Extras

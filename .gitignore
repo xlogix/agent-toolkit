@@ -6,6 +6,11 @@ tmp/
 .claude/
 .playwright-cli/
 
+# Local secrets
+.env
+.env.*
+!.env.example
+
 # Test and debug artifacts
 coverage/
 test-results/
@@ -14,4 +19,3 @@ artifacts/
 
 # OS/editor noise
 .DS_Store
-

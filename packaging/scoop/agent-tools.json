@@ -1,10 +1,10 @@
 {
   "version": "2026.03.05",
   "description": "Cross-platform installer for coding-agent toolchains",
-  "homepage": "https://github.com/<owner>/<repo>",
+  "homepage": "https://github.com/xlogix/agent-toolkit",
   "license": "MIT",
-  "url": "https://github.com/<owner>/<repo>/archive/refs/tags/v2026.03.05.zip",
-  "hash": "REPLACE_WITH_RELEASE_ZIP_SHA256",
+  "url": "https://github.com/xlogix/agent-toolkit/archive/refs/tags/v2026.03.05.zip",
+  "hash": "d9de165b1e30ff63be4c9ec4fa4664d4f680192ad4dec2810c3edb4de075c90f",
   "bin": [
     [
       "install.ps1",

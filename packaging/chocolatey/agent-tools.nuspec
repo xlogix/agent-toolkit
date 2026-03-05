@@ -4,9 +4,9 @@
     <id>agent-tools</id>
     <version>2026.03.05</version>
     <title>Agent Tools Installer</title>
-    <authors>REPLACE_ME</authors>
-    <projectUrl>https://github.com/&lt;owner&gt;/&lt;repo&gt;</projectUrl>
-    <licenseUrl>https://github.com/&lt;owner&gt;/&lt;repo&gt;/blob/main/LICENSE</licenseUrl>
+    <authors>Abhishek Uniyal</authors>
+    <projectUrl>https://github.com/xlogix/agent-toolkit</projectUrl>
+    <licenseUrl>https://github.com/xlogix/agent-toolkit/blob/main/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Cross-platform installer for coding-agent toolchains.</description>
     <tags>agent codex tools cli developer</tags>

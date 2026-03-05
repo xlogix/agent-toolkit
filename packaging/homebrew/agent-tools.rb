@@ -1,8 +1,8 @@
 class AgentTools < Formula
   desc "Cross-platform installer for coding-agent toolchains"
-  homepage "https://github.com/<owner>/<repo>"
-  url "https://github.com/<owner>/<repo>/archive/refs/tags/v2026.03.05.tar.gz"
-  sha256 "REPLACE_WITH_RELEASE_TARBALL_SHA256"
+  homepage "https://github.com/xlogix/agent-toolkit"
+  url "https://github.com/xlogix/agent-toolkit/archive/refs/tags/v2026.03.05.tar.gz"
+  sha256 "0c89df98e3190002692ca80bc0f24eafb053228913bb5dca7fd02039390c790a"
   license "MIT"
 
   depends_on "ripgrep"

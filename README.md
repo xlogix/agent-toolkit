@@ -216,6 +216,57 @@ bash scripts/benchmarks/run-scientific-benchmarks.sh --runs 40 --warmup 8
 
 ---
 
+## Why This Matters
+
+Coding agents rely heavily on local commands to interact with repositories.
+
+Typical agent workflows repeatedly run operations like:
+
+- searching code
+- locating files
+- parsing configuration
+- inspecting diffs
+- rerunning validation
+
+These commands appear constantly inside **edit-validate loops**.
+
+Even small command latency differences accumulate across many iterations.
+
+Optimizing the CLI primitives inside this loop can significantly reduce overall task completion time.
+
+> Faster primitives make faster agents.
+
+---
+
+## Try It Yourself
+
+You can reproduce one of the benchmark improvements locally.
+
+Clone any medium-sized repository and compare search speed:
+
+Traditional search:
+
+```bash
+grep -R "function" .
+```
+
+Optimized search:
+
+```bash
+rg "function"
+```
+
+You can do the same for file discovery:
+
+```bash
+find . -name "*.ts"
+fd -e ts
+```
+
+These commands appear constantly in agent edit-validate loops, so even small improvements multiply quickly.
+
+---
+
 ## Quick Start
 
 ### Interactive CLI Menu (macOS/Linux)
@@ -237,23 +288,8 @@ The menu supports:
 - Run diagnostics/fix suggestions
 - Initialize `.gitignore` in the current repo
 
-### Non-interactive Commands (macOS/Linux)
-
-```bash
-./agent-tools.sh install --profiles core
-./agent-tools.sh install --profiles core,ui,api
-./agent-tools.sh install --profiles core --add httpie --add grpcurl
-./agent-tools.sh install --profiles core,quality --remove lazygit
-./agent-tools.sh update --profiles core,api
-./agent-tools.sh reinstall --profiles core,quality
-./agent-tools.sh profiles
-./agent-tools.sh add uv pnpm
-./agent-tools.sh doctor
-./agent-tools.sh init
-```
-
-`init` writes/patches `.gitignore` in the repo where you run it (or pass `--repo <path>`).
-`--extras` is still available as a shortcut to add `ui,api,infra,quality` packs.
+For install commands, use **Start in 60 Seconds** above or see **One-command Installers** below.
+For full CLI command reference, run `./agent-tools.sh --help`.
 
 Option `7` in the interactive menu (or `./agent-tools.sh init`) adds:
 
@@ -361,8 +397,6 @@ For quick onboarding:
 ## Closing
 
 Coding agents depend heavily on local tooling to iterate quickly and safely. Faster CLI primitives directly improve workflow speed across real repository tasks.
-
-Faster primitives make faster agents.
 
 ---
 

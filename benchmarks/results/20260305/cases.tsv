@@ -1,0 +1,17 @@
+search-recursive	Recursive content search in corpus directory.
+search-docs-ripgrep-all	Search across mixed docs corpus using ripgrep-all vs ripgrep.
+file-discovery	Find TypeScript files in a deep tree.
+find-then-search	Find files then match content.
+fuzzy-filter	Filter large candidate list to a target token.
+file-inspection	Inspect large log files.
+tree-listing	Recursive directory listing visibility workload.
+directory-jump-query	Directory lookup from jump database.
+json-query	Structured JSON query and filtering.
+yaml-query	YAML query workload versus text filtering baseline.
+json-flatten	Flatten nested JSON to search-friendly lines.
+structural-search	Code search with regex baseline vs structural pattern matching.
+diff-rendering-delta	Diff rendering readability pipeline.
+diff-rendering-difftastic	Semantic diff rendering versus standard diff.
+search-replace	Bulk text replacement.
+http-requests	Local HTTP request latency and throughput.
+task-runner	Task-runner invocation overhead.

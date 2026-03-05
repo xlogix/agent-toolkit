@@ -9,6 +9,65 @@ When LLM agents work on real repositories, they spend most of their time in repe
 
 ---
 
+## Start in 60 Seconds
+
+LLM quick onboarding (knowledge-first, no install required):
+
+1. Load [skills/SKILL.md](./skills/SKILL.md).
+2. Load the generated catalog: [skills/references/TOOL-CATALOG.md](./skills/references/TOOL-CATALOG.md).
+3. Ask the agent for a minimal task-specific stack (for example: discovery, refactor, API debug, observability).
+
+Install path (macOS/Linux):
+
+```bash
+chmod +x ./agent-tools.sh
+./agent-tools.sh install --profiles core
+./agent-tools.sh doctor
+```
+
+Install path (Windows):
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\install.ps1
+```
+
+Need help choosing packs? See **Pick Your Profile Fast** below.
+
+---
+
+## Pick Your Profile Fast
+
+| If your workflow is mostly... | Start with | Then add |
+|---|---|---|
+| general coding-agent loops and repo search | `--profiles core` | `quality` |
+| frontend + media workflows | `--profiles core,ui` | `api` |
+| API/service debugging | `--profiles core,api` | `infra` |
+| automation/devops | `--profiles core,infra` | `quality` |
+| full workstation setup | _(omit `--profiles`)_ | tune with `--add` / `--remove` |
+
+Examples:
+
+```bash
+./agent-tools.sh install --profiles core,api
+./agent-tools.sh install --profiles core,quality --add httpie --remove lazygit
+```
+
+---
+
+## Verify in 30 Seconds
+
+```bash
+./agent-tools.sh doctor
+./agent-tools.sh profiles
+```
+
+On Debian/Ubuntu, `fd` may be `fdfind` and `bat` may be `batcat`.
+Knowledge-first skill and generated catalog:
+[skills/SKILL.md](./skills/SKILL.md), [skills/references/TOOL-CATALOG.md](./skills/references/TOOL-CATALOG.md)
+
+---
+
 ## Who This Is For
 
 - engineering teams shipping with AI coding agents
@@ -120,19 +179,32 @@ Optional extras:
 - `httpie` (human-friendly API CLI)
 - `grpcurl` (gRPC debugging from terminal)
 
+Additional candidate tools and rollout notes:
+[docs/TOOL-CANDIDATES.md](./docs/TOOL-CANDIDATES.md)
+
 ---
 
 ## Real Performance Gains
 
-Measured locally on **Apple M3 Pro / macOS 26.3 / hyperfine 1.20.0**.
+Measured locally on **Apple M3 Pro / macOS 26.3 / hyperfine 1.20.0** (40 runs, 8 warmups, date: 2026-03-05).
 
 | Workflow | Baseline | Agent tool | Mean baseline | Mean with agent tool | Speedup |
 |---|---|---|---:|---:|---:|
-| Recursive content search | `grep -R` | `rg` | 375.8 ms | 143.6 ms | **2.62x** |
-| File discovery | `find -name "*.ts"` | `fd -e ts` | 86.6 ms | 35.1 ms | **2.46x** |
-| Find + grep pipeline | `find ... -exec grep` | `rg -g "*.ts"` | 532.7 ms | 154.9 ms | **3.44x** |
+| Recursive content search | `grep -R` | `rg` | 268.4 ms | 95.0 ms | **2.83x** |
+| File discovery | `find -name "*.ts"` | `fd -e ts` | 33.1 ms | 17.9 ms | **1.86x** |
+| Find + grep pipeline | `find ... -exec grep` | `rg -g "*.ts"` | 239.2 ms | 67.1 ms | **3.57x** |
+| Structured search | `rg` | `ast-grep` | 345.1 ms | 66.5 ms | **5.19x** |
+| JSON query | `python3` | `jq` | 177.4 ms | 41.3 ms | **4.30x** |
+| Search + replace | `sed` | `sd` | 73.6 ms | 29.7 ms | **2.48x** |
 
 Full benchmark methodology and reproduction commands: [docs/BENCHMARKS.md](./docs/BENCHMARKS.md)
+Latest run artifacts: [benchmarks/results/20260305](./benchmarks/results/20260305)
+
+Run the scientific benchmark harness with configurable warmups/runs:
+
+```bash
+bash scripts/benchmarks/run-scientific-benchmarks.sh --runs 40 --warmup 8
+```
 
 ---
 
@@ -140,12 +212,13 @@ Full benchmark methodology and reproduction commands: [docs/BENCHMARKS.md](./doc
 
 | Workflow | Without agent-first tooling | With agent-first tooling | Gain |
 |---|---|---|---:|
-| Recursive repo search | `grep -R` | `rg` | **2.62x faster** |
-| File discovery in large trees | `find -name "*.ts"` | `fd -e ts` | **2.46x faster** |
-| Find then search content | `find ... -exec grep` | `rg -g "*.ts"` | **3.44x faster** |
-| Structured refactors | regex-only grep/sed loops | `ast-grep` + `sd` workflow | fewer false positives, safer edits |
-| Review and triage | raw `git diff` + manual git commands | `difftastic` + `lazygit` | faster review and issue triage |
-| Service/API debugging | verbose curl/grpc scripts | `httpie` + `grpcurl` | quicker request/response iteration |
+| Recursive repo search | `grep -R` | `rg` | **2.83x faster** |
+| File discovery in large trees | `find -name "*.ts"` | `fd -e ts` | **1.86x faster** |
+| Find then search content | `find ... -exec grep` | `rg -g "*.ts"` | **3.57x faster** |
+| Structured code search | regex-only search loops | `ast-grep` patterns | **5.19x faster** in measured case |
+| Bulk search-replace | `sed` loops | `sd` | **2.48x faster** in measured case |
+| Diff review readability | raw `git diff` | `git-delta` / `difftastic` | semantic clarity gains; not always faster in raw render time |
+| Service/API debugging | `curl` scripts | `httpie` + `grpcurl` | better readability/iteration; not always lower raw request latency |
 
 ---
 

@@ -1,0 +1,9 @@
+json-parse-throughput	Raw JSON parse/normalize throughput.	missing json2json (simdjson tools)
+syntax-parse	Syntax parsing throughput.	missing tree-sitter
+pipeline-select	Pipeline selection utility throughput.	missing choose
+grpc-url	gRPC request benchmarking.	requires reproducible grpc server fixture
+watchexec	File watch and rerun latency.	interactive/watch workload not stable in single-shot benchmarks
+process-list	Process listing workload.	missing procs
+disk-usage	Disk usage summarization workload.	missing dust
+network-process-usage	Per-process network usage.	requires elevated/network fixture for reproducible results
+system-monitor	System monitor responsiveness.	interactive TUI; no stable single-shot benchmark

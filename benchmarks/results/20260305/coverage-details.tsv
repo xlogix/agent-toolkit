@@ -1,0 +1,32 @@
+search-recursive	ripgrep	benchmarked	ok
+search-docs-ripgrep-all	ripgrep-all	benchmarked	ok
+search-docs-ripgrep-all	ripgrep	benchmarked	ok
+file-discovery	fd	benchmarked	ok
+find-then-search	ripgrep	benchmarked	ok
+fuzzy-filter	fzf	benchmarked	ok
+fuzzy-filter	ripgrep	benchmarked	ok
+file-inspection	bat	benchmarked	ok
+tree-listing	eza	benchmarked	ok
+directory-jump-query	zoxide	benchmarked	ok
+json-query	jq	benchmarked	ok
+yaml-query	yq	benchmarked	ok
+json-parse-throughput	simdjson	skipped	missing json2json (simdjson tools)
+json-flatten	gron	benchmarked	ok
+json-flatten	jq	benchmarked	ok
+structural-search	ast-grep	benchmarked	ok
+structural-search	ripgrep	benchmarked	ok
+syntax-parse	tree-sitter	skipped	missing tree-sitter
+diff-rendering-delta	git-delta	benchmarked	ok
+diff-rendering-difftastic	difftastic	benchmarked	ok
+search-replace	sd	benchmarked	ok
+pipeline-select	choose	skipped	missing choose
+meta	hyperfine	benchmarked	used as benchmark runner
+http-requests	xh	skipped	missing xh
+http-requests	httpie	benchmarked	ok
+grpc-url	grpcurl	skipped	requires reproducible grpc server fixture
+watchexec	watchexec	skipped	interactive/watch workload not stable in single-shot benchmarks
+task-runner	just	benchmarked	ok
+process-list	procs	skipped	missing procs
+disk-usage	dust	skipped	missing dust
+network-process-usage	bandwhich	skipped	requires elevated/network fixture for reproducible results
+system-monitor	bottom	skipped	interactive TUI; no stable single-shot benchmark

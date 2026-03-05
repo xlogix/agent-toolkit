@@ -4,8 +4,6 @@
   <img src="./assets/agenttools-assemble-hero.png" alt="AgentTools Assemble hero banner with logo." />
 </p>
 
-PNG is used as the single image format for broad support across GitHub, package registries, and docs renderers.
-
 **A high-performance local toolchain for coding agents.**  
 When LLM agents work on real repositories, they spend most of their time in repeated local loops: discover files, search code, parse config, diff output, and validate changes. This project gives those loops faster primitives.
 

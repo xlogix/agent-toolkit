@@ -4,7 +4,7 @@ This file is generated from `skills/references/tool-list.tsv`.
 Do not edit manually. Regenerate with:
 `bash skills/scripts/generate-tool-catalog.sh`.
 
-Generated on: 2026-03-05
+Generated on: 2026-03-06
 
 | Tool | Status | SDLC Stage | Primary Use | Pairs Well With | Notes |
 |---|---|---|---|---|---|

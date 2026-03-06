@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>agent-tools</id>
-    <version>2026.03.05</version>
+    <version>2026.03.06.1</version>
     <title>Agent Tools Installer</title>
     <authors>Abhishek Uniyal</authors>
     <projectUrl>https://github.com/xlogix/agent-toolkit</projectUrl>
